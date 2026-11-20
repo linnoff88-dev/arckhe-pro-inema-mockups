@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pro.inema.club — Dashboard Pro · Dark Ink</title>
+<style>
+:root{
+  --bg:oklch(0.18 0.012 255); --content:oklch(0.195 0.012 255);
+  --panel:oklch(0.215 0.012 255); --sidebar:oklch(0.163 0.012 255); --topbar:oklch(0.172 0.012 255);
+  --border:oklch(0.30 0.012 255); --border-strong:oklch(0.40 0.014 255);
+  --ink:oklch(0.95 0.008 250); --muted:oklch(0.70 0.014 250); --faint:oklch(0.55 0.014 250);
+  --accent:oklch(0.74 0.11 222); --accent-strong:oklch(0.80 0.12 222);
+  --accent-ink:oklch(0.20 0.03 240); --accent-bg:oklch(0.27 0.045 232); --accent-bg-hover:oklch(0.25 0.02 255);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  --r:10px; --sidebar-w:248px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);font-size:14.5px;background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.5}
+.mono{font-family:var(--mono)}
+::selection{background:var(--accent-bg);color:var(--ink)}
+
+/* topbar */
+.top{position:sticky;top:0;z-index:30;height:56px;display:flex;align-items:center;gap:16px;padding:0 18px;
+  background:var(--topbar);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:baseline;gap:9px;min-width:calc(var(--sidebar-w) - 18px)}
+.brand .mk{font-weight:700;font-size:17px;letter-spacing:.02em;color:var(--ink)}
+.brand .sd{font-size:11.5px;color:var(--faint)}
+.search{flex:1;max-width:440px;position:relative}
+.search input{width:100%;font-family:var(--sans);font-size:13.5px;color:var(--ink);background:var(--bg);
+  border:1px solid var(--border);border-radius:8px;padding:8px 12px 8px 34px;outline:none;transition:border-color .16s,box-shadow .16s}
+.search input::placeholder{color:var(--faint)}
+.search input:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px oklch(0.74 0.11 222 / .15)}
+.search .ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:13px}
+.tr{margin-left:auto;display:flex;align-items:center;gap:12px}
+.acct{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.acct .av{width:26px;height:26px;border-radius:6px;background:var(--panel);border:1px solid var(--border);
+  display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--muted)}
+.btn{font-family:var(--sans);font-size:13px;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;
+  border:1px solid transparent;transition:background .16s,border-color .16s}
+.btn-primary{background:var(--accent);color:var(--accent-ink);text-decoration:none}
+.btn-primary:hover{background:var(--accent-strong)}
+
+/* shell */
+.shell{display:flex;min-height:calc(100vh - 56px)}
+.side{width:var(--sidebar-w);flex:0 0 var(--sidebar-w);background:var(--sidebar);border-right:1px solid var(--border);
+  padding:18px 12px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.grp{margin-bottom:22px}
+.grp .lbl{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);padding:0 10px;margin-bottom:6px}
+.nav a{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;color:var(--muted);
+  text-decoration:none;font-size:13.5px;font-weight:500;cursor:pointer;transition:background .14s,color .14s}
+.nav a .ic{width:15px;text-align:center;color:var(--faint);font-size:13px}
+.nav a:hover{background:var(--accent-bg-hover);color:var(--ink)}
+.nav a .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.nav a.on{background:var(--accent-bg);color:var(--ink)}
+.nav a.on .ic,.nav a.on .n{color:var(--accent)}
+
+/* main */
+.main{flex:1;min-width:0;background:var(--content);padding:26px 28px 50px}
+.phead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.phead h1{font-size:21px;font-weight:650;letter-spacing:-.01em}
+.phead .meta{font-size:13px;color:var(--muted);margin-top:4px}
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.chip{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--muted);background:transparent;
+  border:1px solid var(--border);border-radius:7px;padding:6px 11px;cursor:pointer;transition:.14s}
+.chip:hover{color:var(--ink);border-color:var(--border-strong)}
+.chip.on{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+.sort{margin-left:auto;font-size:12.5px;color:var(--muted);background:transparent;border:1px solid var(--border);
+  border-radius:7px;padding:6px 11px;cursor:pointer}
+
+.layout{display:grid;grid-template-columns:1fr 250px;gap:26px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:15px;
+  text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;min-height:128px;
+  transition:border-color .16s,background .16s}
+.card:hover{border-color:var(--border-strong);background:oklch(0.235 0.012 255)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card .r1{display:flex;align-items:center;justify-content:space-between}
+.card .ic{font-size:19px;opacity:.92}
+.card .tr{font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--faint)}
+.card h3{font-size:14px;font-weight:600;line-height:1.3;color:var(--ink)}
+.card .tags{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap}
+.card .tg{font-size:11px;color:var(--faint)}
+.card .tg::before{content:"#";opacity:.5}
+.empty{display:none;border:1px dashed var(--border);border-radius:var(--r);padding:38px;text-align:center;color:var(--muted);font-size:13.5px}
+.empty b{color:var(--ink)}
+
+.rail{position:sticky;top:82px;display:flex;flex-direction:column;gap:18px}
+.rail h4{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.upd{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-top:1px solid var(--border)}
+.upd:first-of-type{border-top:none;padding-top:0}
+.upd .d{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
+.upd a{color:var(--muted);text-decoration:none;font-size:13px}.upd a:hover{color:var(--accent)}
+.promo{border:1px solid var(--border);border-radius:var(--r);padding:15px;background:var(--bg)}
+.promo strong{font-size:13.5px;color:var(--ink)}
+.promo p{font-size:12.5px;color:var(--muted);margin:5px 0 12px;line-height:1.45}
+@media(max-width:1060px){.layout{grid-template-columns:1fr}.rail{display:none}}
+@media(max-width:740px){.side{display:none}.brand{min-width:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="mk">INEMA</span><span class="sd">pro.inema.club</span></div>
+  <div class="search"><span class="ic">⌕</span><input id="q" type="text" placeholder="Buscar em 303 cursos"></div>
+  <div class="tr">
+    <div class="acct"><span class="av">N</span><span>Visitante</span></div>
+    <a class="btn btn-primary" href="https://inema.pro">Entrar no Pro</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side">
+    <div class="grp">
+      <div class="lbl">Navegar</div>
+      <nav class="nav">
+        <a class="on"><span class="ic">▦</span>Todos os cursos<span class="n">303</span></a>
+        <a><span class="ic">★</span>Em destaque</a>
+        <a><span class="ic">＋</span>Novidades<span class="n">12</span></a>
+      </nav>
+    </div>
+    <div class="grp">
+      <div class="lbl">Trilhas</div>
+      <nav class="nav" id="trails">
+        <a data-f="Claude Code"><span class="ic">⌘</span>Claude Code<span class="n">41</span></a>
+        <a data-f="Agentes"><span class="ic">◆</span>Agentes<span class="n">28</span></a>
+        <a data-f="IA & Carreira"><span class="ic">◈</span>IA &amp; Carreira<span class="n">19</span></a>
+        <a data-f="Conteúdo"><span class="ic">▶</span>Conteúdo<span class="n">35</span></a>
+        <a data-f="Design"><span class="ic">◐</span>Design<span class="n">22</span></a>
+        <a data-f="Produtividade"><span class="ic">⚡</span>Produtividade<span class="n">30</span></a>
+      </nav>
+    </div>
+    <div class="grp">
+      <div class="lbl">Comunidade</div>
+      <nav class="nav">
+        <a><span class="ic">◇</span>Projetos</a>
+        <a><span class="ic">○</span>GitHub</a>
+        <a><span class="ic">↗</span>Telegram</a>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="phead">
+      <div>
+        <h1 id="ttl">Todos os cursos</h1>
+        <div class="meta" id="meta">303 cursos · acesso aberto. O conteúdo Pro completo fica no INEMA Pro.</div>
+      </div>
+    </div>
+    <div class="bar">
+      <div class="chip on" data-f="all">Todos</div>
+      <div class="chip" data-f="Claude Code">Claude Code</div>
+      <div class="chip" data-f="Agentes">Agentes</div>
+      <div class="chip" data-f="Conteúdo">Conteúdo</div>
+      <div class="chip" data-f="Design">Design</div>
+      <button class="sort">Recentes ↓</button>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="grid" id="grid">
+          <a class="card" href="#" data-trail="Conteúdo" data-title="AI Filmmaking Parte 1" data-tags="filmmaking ia vídeo direção">
+            <div class="r1"><span class="ic">🎬</span><span class="tr">Conteúdo</span></div>
+            <h3>AI Filmmaking — Parte 1</h3>
+            <div class="tags"><span class="tg">filmmaking</span><span class="tg">direção</span></div>
+          </a>
+          <a class="card" href="#" data-trail="IA & Carreira" data-title="Alerta IA 2028" data-tags="ia ai safety rsi fronteira">
+            <div class="r1"><span class="ic">🚨</span><span class="tr">IA &amp; Carreira</span></div>
+            <h3>Alerta IA 2028</h3>
+            <div class="tags"><span class="tg">ai-safety</span><span class="tg">fronteira</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Conteúdo" data-title="Anúncios Virais com IA" data-tags="marketing ia viral copy anúncios">
+            <div class="r1"><span class="ic">📣</span><span class="tr">Conteúdo</span></div>
+            <h3>Anúncios Virais com IA</h3>
+            <div class="tags"><span class="tg">marketing</span><span class="tg">viral</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Conteúdo" data-title="33 Viral Hooks" data-tags="conteúdo reels tiktok copy">
+            <div class="r1"><span class="ic">🪝</span><span class="tr">Conteúdo</span></div>
+            <h3>33 Viral Hooks</h3>
+            <div class="tags"><span class="tg">reels</span><span class="tg">copy</span></div>
+          </a>
+          <a class="card" href="#" data-trail="IA & Carreira" data-title="O Caminho Certo da IA" data-tags="ia carreira futuro trabalho">
+            <div class="r1"><span class="ic">🧭</span><span class="tr">IA &amp; Carreira</span></div>
+            <h3>O Caminho Certo da IA</h3>
+            <div class="tags"><span class="tg">carreira</span><span class="tg">futuro</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Produtividade" data-title="2Cerebro LLM Obsidian" data-tags="llm obsidian rag produtividade">
+            <div class="r1"><span class="ic">🧠</span><span class="tr">Produtividade</span></div>
+            <h3>2Cérebro — LLM + Obsidian</h3>
+            <div class="tags"><span class="tg">llm</span><span class="tg">rag</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Claude Code" data-title="5 Níveis do Claude Code" data-tags="claude code skills hooks automação">
+            <div class="r1"><span class="ic">📊</span><span class="tr">Claude Code</span></div>
+            <h3>5 Níveis do Claude Code</h3>
+            <div class="tags"><span class="tg">skills</span><span class="tg">hooks</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Produtividade" data-title="6 Chapeus Anti Ancora" data-tags="decisão de bono método pensamento">
+            <div class="r1"><span class="ic">🎩</span><span class="tr">Produtividade</span></div>
+            <h3>6 Chapéus + Anti-Âncora</h3>
+            <div class="tags"><span class="tg">decisão</span><span class="tg">método</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Claude Code" data-title="6 Pilares do Claude Code" data-tags="claude code cli mcp skills">
+            <div class="r1"><span class="ic">🧠</span><span class="tr">Claude Code</span></div>
+            <h3>6 Pilares do Claude Code</h3>
+            <div class="tags"><span class="tg">cli</span><span class="tg">mcp</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Agentes" data-title="Agente Hermes Self Hosted" data-tags="agente docker telegram self-hosted">
+            <div class="r1"><span class="ic">🏛️</span><span class="tr">Agentes</span></div>
+            <h3>Agente Hermes — Self-Hosted</h3>
+            <div class="tags"><span class="tg">docker</span><span class="tg">telegram</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Agentes" data-title="Agente Hermes Ollama Privado" data-tags="agente ollama privado self-hosted">
+            <div class="r1"><span class="ic">🔒</span><span class="tr">Agentes</span></div>
+            <h3>Hermes + Ollama — IA Privada</h3>
+            <div class="tags"><span class="tg">ollama</span><span class="tg">privado</span></div>
+          </a>
+          <a class="card" href="#" data-trail="Design" data-title="10 Cara Design Character" data-tags="design personagem prompts ia">
+            <div class="r1"><span class="ic">🎨</span><span class="tr">Design</span></div>
+            <h3>10 Cara Design — Characters</h3>
+            <div class="tags"><span class="tg">personagem</span><span class="tg">prompts</span></div>
+          </a>
+        </div>
+        <div class="empty" id="empty">Nenhum curso para <b id="eterm"></b>. Tente outro termo ou limpe os filtros.</div>
+      </div>
+
+      <aside class="rail">
+        <div>
+          <h4>Atualizações recentes</h4>
+          <div class="upd"><span class="d">29 jun</span><a href="#">AI Filmmaking — Parte 1</a></div>
+          <div class="upd"><span class="d">27 jun</span><a href="#">6 Pilares do Claude Code — Completa</a></div>
+          <div class="upd"><span class="d">24 jun</span><a href="#">Hermes + Ollama</a></div>
+          <div class="upd"><span class="d">21 jun</span><a href="#">Alerta IA 2028</a></div>
+        </div>
+        <div class="promo">
+          <strong>INEMA Pro</strong>
+          <p>Conteúdo completo e organizado, com sua conta de assinante.</p>
+          <a class="btn btn-primary" href="https://inema.pro">Entrar no Pro</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+const q=document.getElementById('q'),grid=document.getElementById('grid'),
+      cards=[...grid.querySelectorAll('.card')],empty=document.getElementById('empty'),
+      eterm=document.getElementById('eterm'),meta=document.getElementById('meta'),ttl=document.getElementById('ttl'),
+      chips=[...document.querySelectorAll('.bar .chip')],trails=[...document.querySelectorAll('#trails a')],
+      navAll=document.querySelector('.side .nav a.on');
+let active='all';
+function apply(){
+  const t=q.value.trim().toLowerCase();let n=0;
+  cards.forEach(c=>{
+    const okF=active==='all'||c.dataset.trail===active;
+    const okQ=!t||(c.dataset.title+' '+c.dataset.tags).toLowerCase().includes(t);
+    const on=okF&&okQ;c.style.display=on?'':'none';if(on)n++;
+  });
+  ttl.textContent=active==='all'?'Todos os cursos':active;
+  meta.textContent=n+(n===1?' curso':' cursos')+(active==='all'?' · acesso aberto':' · filtrando trilha');
+  empty.style.display=n?'none':'block';eterm.textContent='“'+(t||active)+'”';
+}
+function setF(f){active=f;
+  chips.forEach(x=>x.classList.toggle('on',x.dataset.f===f));
+  trails.forEach(x=>x.classList.toggle('on',x.dataset.f===f));
+  if(navAll)navAll.classList.toggle('on',f==='all');apply();}
+q.addEventListener('input',apply);
+chips.forEach(c=>c.addEventListener('click',()=>setF(c.dataset.f)));
+trails.forEach(t=>t.addEventListener('click',()=>setF(t.dataset.f)));
+if(navAll)navAll.addEventListener('click',()=>setF('all'));
+</script>
+</body>
+</html>

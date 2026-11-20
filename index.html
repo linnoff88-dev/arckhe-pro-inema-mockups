@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pro.inema.club — Estilos de layout</title>
+<style>
+:root{
+  --bg:oklch(0.18 0.012 255); --panel:oklch(0.215 0.012 255); --raised:oklch(0.235 0.012 255);
+  --border:oklch(0.30 0.012 255); --border-strong:oklch(0.40 0.014 255);
+  --ink:oklch(0.95 0.008 250); --muted:oklch(0.70 0.014 250); --faint:oklch(0.55 0.014 250);
+  --accent:oklch(0.74 0.11 222);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px;line-height:1.5}
+.box{max-width:900px;width:100%}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+h1{font-size:30px;font-weight:650;letter-spacing:-.01em;margin:10px 0 6px}
+.lead{color:var(--muted);font-size:15px;max-width:64ch}
+.lead b{color:var(--ink)}
+.sec{margin-top:32px}
+.sec .lbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.c{position:relative;display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--border);
+  border-radius:12px;padding:18px 18px 18px 64px;transition:border-color .16s,background .16s,transform .16s}
+.c:hover{border-color:var(--border-strong);background:var(--raised);transform:translateY(-2px)}
+.c .no{position:absolute;left:18px;top:18px;width:34px;height:34px;border-radius:9px;
+  display:grid;place-items:center;font-family:var(--mono);font-size:15px;font-weight:600;
+  color:var(--accent);background:oklch(0.74 0.11 222 / .12);border:1px solid oklch(0.74 0.11 222 / .3)}
+.c .t{display:flex;align-items:center;gap:8px}
+.c .tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.04em}
+.c .badge{margin-left:auto;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--faint);border:1px solid var(--border);border-radius:6px;padding:2px 7px}
+.c h2{font-size:17px;font-weight:600;margin:9px 0 5px}
+.c p{color:var(--muted);font-size:13px;line-height:1.45}
+.c .go{margin-top:12px;font-size:13px;font-weight:600;color:var(--accent)}
+.foot{margin-top:32px;font-family:var(--mono);font-size:12px;color:var(--faint)}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="box">
+  <span class="kicker">pro.inema.club · evolução do inema.club</span>
+  <h1>Estilos de layout</h1>
+  <p class="lead">Mesma estrutura em todos: <b>Dashboard Pro</b> — topbar + sidebar (Navegar / Trilhas / Comunidade) + grade + coluna de atualizações. Só muda a <b>linguagem visual</b>. Cada estilo tem um <b>número</b> — me diz por ele (ex.: "vamos com a 4"). Busca e filtros funcionam em todos.</p>
+
+  <div class="sec">
+    <div class="lbl">★ Páginas oficiais — estilo 5 (Dark Ink) com todos os dados do inema.club</div>
+    <div class="row">
+      <a class="c" href="proinemaclub.html" style="border-color:var(--accent)">
+        <span class="no" style="color:var(--accent)">★</span>
+        <div class="t"><span class="tag">pro.inema.club</span><span class="badge">Aberto</span></div>
+        <h2>Catálogo aberto</h2>
+        <p>190 cursos (busca + filtro), 54 projetos, atualizações e repositórios. Acesso livre. Seções: Cursos · Projetos · Atualizações · Comunidade.</p>
+        <div class="go">Abrir →</div>
+      </a>
+      <a class="c" href="proinemapro.html" style="border-color:var(--accent)">
+        <span class="no" style="color:var(--accent)">🔒</span>
+        <div class="t"><span class="tag">inema.pro</span><span class="badge">Com portão</span></div>
+        <h2>Área Pro (autenticada)</h2>
+        <p>Mesma página, com portão: se o cookie de vencimento for válido, abre; senão mostra a tela de login + propaganda. "Entrar com Google" (protótipo) libera por 30 dias.</p>
+        <div class="go">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Clean futurista · Apple</div>
+    <div class="row">
+      <a class="c" href="pro-c-futurist.html">
+        <span class="no">1</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Clean Futurist</span></div>
+        <h2>Clean Futurist</h2>
+        <p>Escuro frio e preciso, alto contraste, acento elétrico, rótulos mono, linha-acento animada. Legível.</p>
+        <div class="go">Abrir →</div>
+      </a>
+      <a class="c" href="pro-c-cupertino.html">
+        <span class="no">2</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Cupertino</span></div>
+        <h2>Cupertino (Apple)</h2>
+        <p>Claro, pill buttons, cards com scroll-reveal (fade-up Apple) e hover com escala, azul Apple.</p>
+        <div class="go">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Awwwards · profissional</div>
+    <div class="row">
+      <a class="c" href="pro-c-editorial.html">
+        <span class="no">3</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Editorial</span></div>
+        <h2>Editorial</h2>
+        <p>Swiss/estúdio: serifa Fraunces, grade com fios, acento vermelhão. Claro, magazine.</p>
+        <div class="go">Abrir →</div>
+      </a>
+      <a class="c" href="pro-c-atelier.html">
+        <span class="no">4</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Atelier</span></div>
+        <h2>Atelier</h2>
+        <p>Agência luxe: Bricolage Grotesque, charcoal quente + ouro velho. Escuro, premium.</p>
+        <div class="go">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Refinado · impeccable</div>
+    <div class="row">
+      <a class="c" href="pro-c-ink.html">
+        <span class="no">5</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Dark Ink</span></div>
+        <h2>Dark Ink</h2>
+        <p>Escuro sóbrio, um acento contido, bordas hairline, sem glow. Cara de Linear/Stripe.</p>
+        <div class="go">Abrir →</div>
+      </a>
+      <a class="c" href="pro-c-light.html">
+        <span class="no">6</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Light Studio</span></div>
+        <h2>Light Studio</h2>
+        <p>Claro editorial, papel quente, título em serifa, acento azul. Máxima legibilidade.</p>
+        <div class="go">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Neon inicial</div>
+    <div class="row">
+      <a class="c" href="pro-layout-c.html">
+        <span class="no">7</span>
+        <div class="t"><span class="tag">estilo</span><span class="badge">Neon</span></div>
+        <h2>Neon</h2>
+        <p>Identidade neon do inema.club (navy/ciano/roxo, glow, grid). Ponto de partida.</p>
+        <div class="go">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <p class="foot">INEMA · protótipo interno · 7 estilos, 1 estrutura</p>
+</div>
+</body>
+</html>
